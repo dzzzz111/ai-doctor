@@ -2,13 +2,32 @@
   <view class="container">
     <!-- 顶部标题 -->
     <view class="header">
-      <view class="status-bar"></view>
+      <view class="status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
       <view class="nav-bar">
         <view class="back-btn" @click="goBack">
           <text class="iconfont icon-back">←</text>
         </view>
-        <text class="header-title">AI智能问诊</text>
+        <view class="title-wrapper">
+          <text class="header-title">AI智能问诊</text>
+          <text class="subtitle">专业·准确·可靠</text>
+        </view>
         <view class="placeholder"></view>
+      </view>
+    </view>
+    
+    <!-- 快捷问题 -->
+    <view class="quick-questions" v-if="messageList.length === 1">
+      <view class="quick-title"> 常见咨询</view>
+      <view class="question-list">
+        <view 
+          class="question-item" 
+          v-for="(q, index) in quickQuestions" 
+          :key="index"
+          @click="selectQuickQuestion(q)"
+        >
+          <text class="question-icon">{{ q.icon }}</text>
+          <text class="question-text">{{ q.text }}</text>
+        </view>
       </view>
     </view>
     
@@ -145,9 +164,15 @@ export default {
       messageList: [
         {
           type: 'ai',
-          content: '您好！我是您的AI医疗助手，请描述您的症状，我会为您提供专业的医疗建议。',
+          content: '您好！我是您的AI医疗助手 👨‍⚕️\n\n我可以帮您：\n• 分析症状并提供初步建议\n• 解答健康相关问题\n• 提供康复指导\n\n请描述您的症状，我会为您提供专业的医疗建议。',
           time: this.getCurrentTime()
         }
+      ],
+      quickQuestions: [
+        { icon: '🦵', text: '膝盖疼痛怎么办？' },
+        { icon: '🏃', text: '术后如何康复训练？' },
+        { icon: '💊', text: '关节炎如何用药？' },
+        { icon: '🍎', text: '日常饮食注意什么？' }
       ],
       inputMessage: '',
       isLoading: false,
@@ -427,6 +452,12 @@ export default {
       });
     },
 
+    // 选择快捷问题
+    selectQuickQuestion(question) {
+      this.inputMessage = question.text;
+      this.sendMessage();
+    },
+    
     // 选择选项按钮
     selectOption(option) {
       this.inputMessage = option;
@@ -558,19 +589,15 @@ export default {
 
 /* 顶部标题 */
 .header {
-  background: linear-gradient(to right, #3a7bd5, #00d2ff);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   flex-shrink: 0;
   position: relative;
   z-index: 100;
-}
-
-.status-bar {
-  height: 44rpx;
-  width: 100%;
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.3);
 }
 
 .nav-bar {
-  height: 90rpx;
+  height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -584,23 +611,91 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10rpx);
 }
 
 .back-btn text {
   color: #fff;
-  font-size: 36rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.title-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
 }
 
 .header-title {
   font-size: 36rpx;
-  font-weight: 500;
+  font-weight: bold;
   color: #fff;
-  flex: 1;
-  text-align: center;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 2rpx;
 }
 
 .placeholder {
   width: 60rpx;
+}
+
+/* 快捷问题 */
+.quick-questions {
+  padding: 30rpx;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(248, 249, 255, 0.9) 100%);
+  backdrop-filter: blur(20rpx);
+}
+
+.quick-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.question-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.question-item {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  padding: 24rpx 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.1);
+  border: 2rpx solid rgba(102, 126, 234, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.question-item:active {
+  transform: scale(0.96);
+  box-shadow: 0 2rpx 8rpx rgba(102, 126, 234, 0.15);
+}
+
+.question-icon {
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.question-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
 }
 
 /* 聊天容器 */
@@ -608,8 +703,7 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 134rpx);
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(180deg, rgba(248, 249, 255, 0.5) 0%, rgba(230, 233, 255, 0.3) 100%);
 }
 
 /* 消息列表 */
@@ -625,7 +719,7 @@ export default {
 
 .message {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   max-width: 80%;
 }
 
@@ -652,10 +746,11 @@ export default {
 }
 
 .ai-content {
-  background: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
   color: #333;
   margin-left: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4rpx 15rpx rgba(102, 126, 234, 0.12);
+  border: 1rpx solid rgba(102, 126, 234, 0.08);
 }
 
 .message-content {
@@ -775,22 +870,24 @@ export default {
 
 /* 输入区域 */
 .input-area {
-  background: #fff;
-  padding: 20rpx;
-  border-top: 1rpx solid #f0f0f0;
-  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
+  padding: 20rpx 20rpx 30rpx;
+  border-top: none;
+  box-shadow: 0 -4rpx 20rpx rgba(102, 126, 234, 0.08);
 }
 
 .input-wrapper {
-  background: #f8f9fa;
-  border-radius: 24rpx;
-  padding: 20rpx;
-  border: 2rpx solid #e9ecef;
-  transition: border-color 0.3s ease;
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid rgba(102, 126, 234, 0.15);
+  box-shadow: 0 2rpx 12rpx rgba(102, 126, 234, 0.06);
+  transition: all 0.3s ease;
 }
 
 .input-wrapper:focus-within {
-  border-color: #667eea;
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.12);
 }
 
 .message-input {

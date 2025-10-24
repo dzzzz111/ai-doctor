@@ -125,6 +125,7 @@
       <view class="section-title">已添加的视频</view>
       <view class="button-group">
         <button class="btn" @click="loadVideos">刷新列表</button>
+        <button class="btn success" @click="generateCovers">批量生成封面</button>
         <button class="btn danger" @click="clearTestVideos">清空测试视频</button>
       </view>
       
@@ -132,11 +133,17 @@
         <view class="video-item" v-for="video in videos" :key="video._id">
           <view class="video-header">
             <text class="video-title">{{ video.title }}</text>
-            <text class="video-url-type" v-if="isTestVideo(video.videoUrl)">🧪 测试</text>
+            <view class="video-badges">
+              <text class="video-url-type" v-if="isTestVideo(video.videoUrl)">🧪 测试</text>
+              <text class="video-cover-status" :class="video.thumbnailUrl ? 'has-cover' : 'no-cover'">
+                {{ video.thumbnailUrl ? '✓ 有封面' : '⚠ 无封面' }}
+              </text>
+            </view>
           </view>
-          <text class="video-info">时长：{{ video.duration }}秒 | {{ getDifficultyText(video.difficulty) }}</text>
+          <text class="video-info">时长：{{ video.duration }}秒 | {{ getDifficultyText(video.difficulty) }} | {{ getCategoryText(video.category) }}</text>
           <text class="video-stages">适用：{{ video.targetStage.join('、') }}期</text>
-          <text class="video-url">链接：{{ video.videoUrl }}</text>
+          <text class="video-url" v-if="video.videoUrl">视频：{{ video.videoUrl.substring(0, 50) }}...</text>
+          <text class="video-url" v-if="video.thumbnailUrl">封面：{{ video.thumbnailUrl.substring(0, 50) }}...</text>
         </view>
       </view>
       
@@ -339,6 +346,16 @@ export default {
       return map[difficulty] || '简单';
     },
     
+    getCategoryText(category) {
+      const map = {
+        'strength': '力量',
+        'flexibility': '柔韧性',
+        'balance': '平衡',
+        'aerobic': '有氧'
+      };
+      return map[category] || '训练';
+    },
+    
     isTestVideo(url) {
       const testUrls = [
         'https://media.w3.org/2010/05/sintel/trailer.mp4',
@@ -346,6 +363,53 @@ export default {
         'https://media.w3.org/2010/05/video/movie_300.mp4'
       ];
       return testUrls.includes(url);
+    },
+    
+    async generateCovers() {
+      uni.showModal({
+        title: '批量生成封面',
+        content: '将为所有没有封面的视频自动生成封面图，已有封面的视频不受影响。确定继续？',
+        success: async (res) => {
+          if (res.confirm) {
+            uni.showLoading({ title: '生成中...' });
+            
+            try {
+              const result = await uniCloud.callFunction({
+                name: 'initRehabVideos',
+                data: {
+                  action: 'generateCovers'
+                }
+              });
+              
+              uni.hideLoading();
+              
+              if (result.result.code === 0) {
+                const data = result.result.data;
+                uni.showModal({
+                  title: '生成成功',
+                  content: `共 ${data.total} 个视频，已为 ${data.updated} 个视频生成封面`,
+                  showCancel: false,
+                  success: () => {
+                    this.loadVideos();
+                  }
+                });
+              } else {
+                uni.showToast({
+                  title: result.result.message,
+                  icon: 'none'
+                });
+              }
+            } catch (error) {
+              uni.hideLoading();
+              console.error('生成失败:', error);
+              uni.showToast({
+                title: '生成失败: ' + error.message,
+                icon: 'none'
+              });
+            }
+          }
+        }
+      });
     },
     
     async clearTestVideos() {
@@ -561,12 +625,34 @@ checkbox-group label {
   margin-bottom: 5px;
 }
 
+.video-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
 .video-url-type {
   font-size: 12px;
   padding: 2px 8px;
   background: #fef3c7;
   color: #f59e0b;
   border-radius: 4px;
+}
+
+.video-cover-status {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.video-cover-status.has-cover {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.video-cover-status.no-cover {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 .video-url {

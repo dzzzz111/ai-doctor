@@ -17,7 +17,7 @@
     </view>
     
     <!-- 分类标签 -->
-    <view class="category-tabs">
+    <view class="category-tabs" :style="{ top: (statusBarHeight + 44) + 'px' }">
       <scroll-view scroll-x class="tabs-scroll" show-scrollbar="false">
         <view class="tab-item" 
           v-for="(category, index) in categories" 
@@ -31,7 +31,15 @@
     </view>
     
     <!-- 帖子列表 -->
-    <scroll-view scroll-y class="post-list" @scrolltolower="loadMorePosts">
+    <scroll-view 
+      scroll-y 
+      class="post-list" 
+      :style="{ 
+        marginTop: (statusBarHeight + 44 + 70) + 'px',
+        height: 'calc(100vh - ' + (statusBarHeight + 44 + 70) + 'px)'
+      }"
+      @scrolltolower="loadMorePosts"
+    >
       <view class="post-item" v-for="post in filteredPosts" :key="post.id" @click="viewPostDetail(post)">
         <!-- 用户信息 -->
         <view class="user-info">
@@ -113,6 +121,8 @@ export default {
       currentCategory: 'all',
       isLoading: false,
       hasMore: true,
+      page: 1,
+      pageSize: 10,
       categories: [
         { id: 'all', name: '全部' },
         { id: 'disease', name: '疾病交流' },
@@ -123,246 +133,8 @@ export default {
         { id: 'nutrition', name: '营养饮食' },
         { id: 'exercise', name: '运动健身' }
       ],
-      posts: [
-        {
-          id: 1,
-          userId: 1,
-          username: '健康小达人',
-          userAvatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
-          title: '分享我的高血压控制经验',
-          content: '经过半年的努力，我的血压终于稳定在正常范围了！主要方法包括：每天坚持30分钟有氧运动，控制盐分摄入，保持规律作息。最重要的是要按时服药，不能随意停药。希望我的经验能帮到大家！',
-          category: 'disease',
-          categoryName: '疾病交流',
-          publishTime: '2小时前',
-          likes: 156,
-          comments: 23,
-          shares: 12,
-          collects: 45,
-          isLiked: false,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 2,
-          userId: 2,
-          username: '康复之路',
-          userAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face',
-          title: '膝关节手术后的康复训练',
-          content: '刚刚做完膝关节镜手术，医生建议做一些康复训练。想请教一下有经验的朋友，康复期间需要注意什么？有哪些合适的训练动作？',
-          category: 'rehabilitation',
-          categoryName: '康复分享',
-          publishTime: '4小时前',
-          likes: 89,
-          comments: 31,
-          shares: 5,
-          collects: 12,
-          isLiked: true,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 3,
-          userId: 3,
-          username: '中医爱好者',
-          userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-          title: '中医调理失眠的有效方法',
-          content: '长期失眠困扰着我，试过很多方法。最近在看中医，医生建议我通过中药调理配合穴位按摩。每天晚上按揉神门穴、内关穴，效果还不错。大家有什么好的方法可以分享吗？',
-          category: 'treatment',
-          categoryName: '治疗经验',
-          publishTime: '6小时前',
-          likes: 234,
-          comments: 67,
-          shares: 28,
-          collects: 89,
-          isLiked: false,
-          isCollected: true,
-          images: []
-        },
-        {
-          id: 4,
-          userId: 4,
-          username: '营养师小李',
-          userAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-          title: '糖尿病人的饮食指南',
-          content: '作为营养师，我想给大家分享一些糖尿病人的饮食建议：1. 控制总热量摄入 2. 选择低GI食物 3. 少食多餐 4. 增加膳食纤维 5. 限制精制糖分。具体的食谱安排可以私信我哦！',
-          category: 'nutrition',
-          categoryName: '营养饮食',
-          publishTime: '8小时前',
-          likes: 312,
-          comments: 45,
-          shares: 56,
-          collects: 127,
-          isLiked: true,
-          isCollected: true,
-          images: [
-            'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 5,
-          userId: 5,
-          username: '瑜伽爱好者',
-          userAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face',
-          title: '瑜伽改善颈椎病的亲身体验',
-          content: '长期伏案工作导致颈椎问题严重，朋友推荐练习瑜伽。坚持了3个月，颈椎疼痛明显缓解。推荐几个动作：猫牛式、眼镜蛇式、鱼式。每天20分钟，效果很棒！',
-          category: 'exercise',
-          categoryName: '运动健身',
-          publishTime: '10小时前',
-          likes: 178,
-          comments: 29,
-          shares: 15,
-          collects: 67,
-          isLiked: false,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1506629905743-9bc0f64195c4?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 6,
-          userId: 6,
-          username: '心理咨询师',
-          userAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-          title: '如何应对焦虑情绪',
-          content: '很多朋友都有焦虑的困扰。分享几个缓解焦虑的方法：深呼吸练习、正念冥想、规律运动、充足睡眠、与朋友交流。如果焦虑严重影响生活，建议寻求专业帮助。',
-          category: 'mental',
-          categoryName: '心理健康',
-          publishTime: '12小时前',
-          likes: 289,
-          comments: 52,
-          shares: 34,
-          collects: 98,
-          isLiked: true,
-          isCollected: false,
-          images: []
-        },
-        {
-          id: 7,
-          userId: 7,
-          username: '老药工',
-          userAvatar: 'https://images.unsplash.com/photo-1557862921-37829c790f19?w=100&h=100&fit=crop&crop=face',
-          title: '抗生素的正确使用方法',
-          content: '看到很多朋友滥用抗生素，真的很担心。抗生素不是万能药，一定要在医生指导下使用。切记：1. 不要自行购买 2. 按时按量服用 3. 疗程要足够 4. 不要随意停药。',
-          category: 'medicine',
-          categoryName: '用药咨询',
-          publishTime: '1天前',
-          likes: 445,
-          comments: 78,
-          shares: 89,
-          collects: 156,
-          isLiked: false,
-          isCollected: true,
-          images: [
-            'https://images.unsplash.com/photo-1584362917165-526a968579e8?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 8,
-          userId: 8,
-          username: '跑步达人',
-          userAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face',
-          title: '跑步对心脏健康的益处',
-          content: '坚持跑步5年了，心脏功能越来越好的。跑步是最简单有效的有氧运动，能增强心肺功能，改善血液循环，降低心脏病风险。建议从慢跑开始，循序渐进。',
-          category: 'exercise',
-          categoryName: '运动健身',
-          publishTime: '1天前',
-          likes: 267,
-          comments: 41,
-          shares: 23,
-          collects: 78,
-          isLiked: true,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop',
-            'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 9,
-          userId: 9,
-          username: '养生专家',
-          userAvatar: 'https://images.unsplash.com/photo-1537511446984-935f9de4c245?w=100&h=100&fit=crop&crop=face',
-          title: '四季养生小贴士',
-          content: '春夏秋冬，养生方法各不相同。春天养肝，夏天养心，秋天养肺，冬天养肾。顺应自然规律，调整作息和饮食，才能达到最好的养生效果。',
-          category: 'treatment',
-          categoryName: '治疗经验',
-          publishTime: '2天前',
-          likes: 334,
-          comments: 56,
-          shares: 45,
-          collects: 112,
-          isLiked: false,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 10,
-          userId: 10,
-          username: '抗癌战士',
-          userAvatar: 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=100&h=100&fit=crop&crop=face',
-          title: '抗癌路上的心理建设',
-          content: '确诊癌症后，心理打击很大。但我想告诉大家，积极的心态对治疗很重要。家人朋友的支持、医生的专业治疗、自己的坚强意志，缺一不可。我们一起加油！',
-          category: 'disease',
-          categoryName: '疾病交流',
-          publishTime: '2天前',
-          likes: 567,
-          comments: 89,
-          shares: 67,
-          collects: 234,
-          isLiked: true,
-          isCollected: true,
-          images: []
-        },
-        {
-          id: 11,
-          userId: 11,
-          username: '健身教练',
-          userAvatar: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=100&h=100&fit=crop&crop=face',
-          title: '办公室人群的健身建议',
-          content: '很多上班族都有颈椎、腰椎问题。推荐几个办公室就能做的小动作：颈部转动、肩部放松、腰部扭转、手腕脚踝活动。每小时起身活动5分钟，对健康很有帮助。',
-          category: 'exercise',
-          categoryName: '运动健身',
-          publishTime: '3天前',
-          likes: 189,
-          comments: 34,
-          shares: 12,
-          collects: 56,
-          isLiked: false,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=300&fit=crop'
-          ]
-        },
-        {
-          id: 12,
-          userId: 12,
-          username: '中医世家',
-          userAvatar: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=100&h=100&fit=crop&crop=face',
-          title: '艾灸养生的好处',
-          content: '我们家几代都是中医，艾灸是很好的养生方法。可以温通经络、散寒除湿、调理气血。特别适合虚寒体质的朋友。但要注意艾灸的时间和频率，过量反而不好。',
-          category: 'treatment',
-          categoryName: '治疗经验',
-          publishTime: '3天前',
-          likes: 278,
-          comments: 45,
-          shares: 23,
-          collects: 89,
-          isLiked: true,
-          isCollected: false,
-          images: [
-            'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop'
-          ]
-        }
-      ]
+      posts: []  // 从云函数加载数据
+
     };
   },
   computed: {
@@ -376,10 +148,84 @@ export default {
   onLoad() {
     const systemInfo = uni.getSystemInfoSync();
     this.statusBarHeight = systemInfo.statusBarHeight || 20;
+    
+    // 加载帖子列表
+    this.loadPosts();
+  },
+  onShow() {
+    // 页面显示时刷新列表
+    this.refreshPosts();
   },
   methods: {
+    // 加载帖子列表
+    async loadPosts(loadMore = false) {
+      if (this.isLoading) return;
+      
+      this.isLoading = true;
+      
+      if (!loadMore) {
+        this.page = 1;
+        this.posts = [];
+      } else {
+        this.page++;
+      }
+      
+      // 获取用户信息
+      const userInfoStr = uni.getStorageSync('userInfo');
+      let userId = '';
+      
+      if (userInfoStr) {
+        try {
+          const userInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+          userId = userInfo.userId || userInfo._id || '';
+        } catch (e) {
+          console.error('解析用户信息失败:', e);
+        }
+      }
+      
+      try {
+        const result = await uniCloud.callFunction({
+          name: 'getPosts',
+          data: {
+            category: this.currentCategory,
+            page: this.page,
+            pageSize: this.pageSize,
+            userId: userId
+          }
+        });
+        
+        if (result.result.code === 0) {
+          const newPosts = result.result.data.posts;
+          this.posts = loadMore ? [...this.posts, ...newPosts] : newPosts;
+          this.hasMore = result.result.data.hasMore;
+        }
+      } catch (error) {
+        console.error('加载帖子失败:', error);
+        uni.showToast({
+          title: '加载失败',
+          icon: 'none'
+        });
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    
+    // 刷新帖子列表
+    refreshPosts() {
+      this.loadPosts(false);
+    },
+    
+    // 加载更多
+    loadMorePosts() {
+      if (this.hasMore && !this.isLoading) {
+        this.loadPosts(true);
+      }
+    },
+    
+    // 切换分类
     switchCategory(categoryId) {
       this.currentCategory = categoryId;
+      this.loadPosts(false);
     },
     
     getCategoryColor(category) {
@@ -395,15 +241,91 @@ export default {
       return colors[category] || '#ddd';
     },
     
-    likePost(post) {
-      post.isLiked = !post.isLiked;
-      post.likes += post.isLiked ? 1 : -1;
+    // 点赞帖子
+    async likePost(post) {
+      const userInfoStr = uni.getStorageSync('userInfo');
+      if (!userInfoStr) {
+        uni.showToast({
+          title: '请先登录',
+          icon: 'none'
+        });
+        return;
+      }
+      
+      let userInfo;
+      try {
+        userInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+      } catch (e) {
+        console.error('解析用户信息失败:', e);
+        return;
+      }
+      
+      try {
+        const result = await uniCloud.callFunction({
+          name: 'postInteraction',
+          data: {
+            action: 'like',
+            postId: post.id,
+            userId: userInfo.userId || userInfo._id
+          }
+        });
+        
+        if (result.result.code === 0) {
+          post.isLiked = result.result.data.isLiked;
+          post.likes += post.isLiked ? 1 : -1;
+        }
+      } catch (error) {
+        console.error('点赞失败:', error);
+      }
     },
     
+    // 收藏帖子
+    async collectPost(post) {
+      const userInfoStr = uni.getStorageSync('userInfo');
+      if (!userInfoStr) {
+        uni.showToast({
+          title: '请先登录',
+          icon: 'none'
+        });
+        return;
+      }
+      
+      let userInfo;
+      try {
+        userInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+      } catch (e) {
+        console.error('解析用户信息失败:', e);
+        return;
+      }
+      
+      try {
+        const result = await uniCloud.callFunction({
+          name: 'postInteraction',
+          data: {
+            action: 'collect',
+            postId: post.id,
+            userId: userInfo.userId || userInfo._id
+          }
+        });
+        
+        if (result.result.code === 0) {
+          post.isCollected = result.result.data.isCollected;
+          post.collects += post.isCollected ? 1 : -1;
+          
+          uni.showToast({
+            title: post.isCollected ? '收藏成功' : '取消收藏',
+            icon: 'success'
+          });
+        }
+      } catch (error) {
+        console.error('收藏失败:', error);
+      }
+    },
+    
+    // 跳转到评论（详情页）
     commentPost(post) {
-      uni.showToast({
-        title: '评论功能开发中',
-        icon: 'none'
+      uni.navigateTo({
+        url: `/pages/community/detail?id=${post.id}`
       });
     },
     
@@ -430,12 +352,14 @@ export default {
       });
     },
     
+    // 查看帖子详情
     viewPostDetail(post) {
       uni.navigateTo({
-        url: `/pagesB/community/detail?id=${post.id}`
+        url: `/pages/community/detail?id=${post.id}`
       });
     },
     
+    // 预览图片
     previewImage(images, current) {
       uni.previewImage({
         urls: images,
@@ -443,6 +367,7 @@ export default {
       });
     },
     
+    // 搜索功能
     showSearch() {
       uni.showToast({
         title: '搜索功能开发中',
@@ -450,27 +375,26 @@ export default {
       });
     },
     
+    // 跳转到发布页面
     showPublish() {
-      uni.showToast({
-        title: '发布功能开发中',
-        icon: 'none'
-      });
-    },
-    
-    loadMorePosts() {
-      if (this.isLoading || !this.hasMore) return;
-      
-      this.isLoading = true;
-      
-      // 模拟加载更多数据
-      setTimeout(() => {
-        this.isLoading = false;
-        // 这里可以加载更多帖子数据
+      // 检查登录状态
+      const userInfoStr = uni.getStorageSync('userInfo');
+      if (!userInfoStr) {
         uni.showToast({
-          title: '没有更多数据了',
+          title: '请先登录',
           icon: 'none'
         });
-      }, 1000);
+        setTimeout(() => {
+          uni.navigateTo({
+            url: '/pagesB/mine/login'
+          });
+        }, 1500);
+        return;
+      }
+      
+      uni.navigateTo({
+        url: '/pages/community/publish'
+      });
     }
   }
 }
@@ -543,7 +467,7 @@ export default {
   background: linear-gradient(to bottom, #fff, #f8f9ff);
   padding: 25rpx 0;
   position: fixed;
-  top: calc(var(--status-bar-height) + 88rpx);
+  /* top 通过内联样式动态设置 */
   left: 0;
   right: 0;
   z-index: 999;
@@ -601,8 +525,7 @@ export default {
 
 /* 帖子列表 */
 .post-list {
-  margin-top: calc(var(--status-bar-height) + 88rpx + 140rpx);
-  height: calc(100vh - var(--status-bar-height) - 88rpx - 140rpx);
+  /* margin-top 和 height 通过内联样式动态设置 */
   padding: 20rpx;
 }
 

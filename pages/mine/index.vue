@@ -70,58 +70,26 @@
     
     <!-- 功能列表 -->
     <view class="feature-list">
-      <!-- 健康档案，登录可见 -->
-      <view class="feature-group" v-if="isLogin">
-        <view class="group-title">健康档案</view>
-        <view class="feature-item" @click="navigateTo('/pages/mine/medical-record')">
-          <view class="item-icon medical-record">
-            <text class="iconfont icon-record"></text>
-          </view>
-          <view class="item-content">
-            <text class="item-name">病历记录</text>
-          </view>
-          <text class="iconfont icon-right"></text>
-        </view>
-        <view class="feature-item" @click="navigateTo('/pages/mine/examination')">
-          <view class="item-icon examination">
-            <text class="iconfont icon-exam"></text>
-          </view>
-          <view class="item-content">
-            <text class="item-name">体检报告</text>
-          </view>
-          <text class="iconfont icon-right"></text>
-        </view>
-        <view class="feature-item" @click="navigateTo('/pages/mine/medication')">
-          <view class="item-icon medication">
-            <text class="iconfont icon-medicine"></text>
-          </view>
-          <view class="item-content">
-            <text class="item-name">用药记录</text>
-          </view>
-          <text class="iconfont icon-right"></text>
-        </view>
-      </view>
-      
       <!-- 服务记录 -->
       <view class="feature-group">
         <view class="group-title">服务记录</view>
         <view class="feature-item" @click="navigateTo('/pages/ai-doctor/history')">
           <view class="item-icon ai-history">
-            <text class="iconfont icon-chat-history"></text>
+            <text class="iconfont icon-chat-history">💬</text>
           </view>
           <view class="item-content">
             <text class="item-name">问诊记录</text>
           </view>
-          <text class="iconfont icon-right"></text>
+          <text class="iconfont icon-right">›</text>
         </view>
         <view class="feature-item" @click="navigateTo('/pages/image-diagnose/history')">
           <view class="item-icon image-history">
-            <text class="iconfont icon-image-history"></text>
+            <text class="iconfont icon-image-history">🖼️</text>
           </view>
           <view class="item-content">
             <text class="item-name">图像诊断记录</text>
           </view>
-          <text class="iconfont icon-right"></text>
+          <text class="iconfont icon-right">›</text>
         </view>
       </view>
       
@@ -130,39 +98,21 @@
         <view class="group-title">系统设置</view>
         <view class="feature-item" @click="navigateTo('/pagesB/mine/settings')">
           <view class="item-icon settings">
-            <text class="iconfont icon-settings"></text>
+            <text class="iconfont icon-settings">⚙️</text>
           </view>
           <view class="item-content">
             <text class="item-name">设置</text>
           </view>
-          <text class="iconfont icon-right"></text>
-        </view>
-        <view class="feature-item" @click="navigateTo('/pages/mine/about')">
-          <view class="item-icon about">
-            <text class="iconfont icon-about"></text>
-          </view>
-          <view class="item-content">
-            <text class="item-name">关于我们</text>
-          </view>
-          <text class="iconfont icon-right"></text>
-        </view>
-        <view class="feature-item" @click="navigateTo('/pages/mine/feedback')">
-          <view class="item-icon feedback">
-            <text class="iconfont icon-feedback"></text>
-          </view>
-          <view class="item-content">
-            <text class="item-name">意见反馈</text>
-          </view>
-          <text class="iconfont icon-right"></text>
+          <text class="iconfont icon-right">›</text>
         </view>
         <view class="feature-item" v-if="isLogin" @click="logout">
           <view class="item-icon logout">
-            <text class="iconfont icon-logout"></text>
+            <text class="iconfont icon-logout">🚪</text>
           </view>
           <view class="item-content">
             <text class="item-name">退出登录</text>
           </view>
-          <text class="iconfont icon-right"></text>
+          <text class="iconfont icon-right">›</text>
         </view>
       </view>
     </view>
@@ -245,26 +195,16 @@ export default {
       }
     },
     navigateTo(url) {
-      // 检查页面是否存在
-      const existingPages = [
-        '/pagesB/mine/login',
-        '/pagesB/mine/settings',
-        '/pages/image-diagnose/history',
-        '/pages/ai-doctor/history'
-      ];
-      
-      if (existingPages.includes(url)) {
-        uni.navigateTo({
-          url: url
-        });
-      } else {
-        // 对于不存在的页面，显示提示
-        uni.showToast({
-          title: '功能开发中',
-          icon: 'none',
-          duration: 2000
-        });
-      }
+      uni.navigateTo({
+        url: url,
+        fail: () => {
+          uni.showToast({
+            title: '页面跳转失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      });
     },
     logout() {
       // 退出登录逻辑
@@ -580,22 +520,7 @@ export default {
 }
 
 .item-icon text {
-  font-size: 40rpx;
-}
-
-.medical-record {
-  background-color: rgba(58, 123, 213, 0.1);
-  color: #3a7bd5;
-}
-
-.examination {
-  background-color: rgba(0, 210, 255, 0.1);
-  color: #00d2ff;
-}
-
-.medication {
-  background-color: rgba(107, 71, 193, 0.1);
-  color: #6b47c1;
+  font-size: 32rpx;
 }
 
 .ai-history {
@@ -611,16 +536,6 @@ export default {
 .settings {
   background-color: rgba(158, 158, 158, 0.1);
   color: #9e9e9e;
-}
-
-.about {
-  background-color: rgba(233, 30, 99, 0.1);
-  color: #e91e63;
-}
-
-.feedback {
-  background-color: rgba(3, 169, 244, 0.1);
-  color: #03a9f4;
 }
 
 .logout {

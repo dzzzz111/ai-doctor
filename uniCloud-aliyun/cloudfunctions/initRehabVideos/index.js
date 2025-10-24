@@ -462,6 +462,73 @@ exports.main = async (event, context) => {
       };
     }
     
+    // 批量为现有视频生成封面
+    if (action === 'generateCovers') {
+      // 封面生成函数
+      const getCoverUrl = (category, index) => {
+        const coverMap = {
+          'strength': [
+            'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=640&h=360&fit=crop',
+            'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=640&h=360&fit=crop',
+            'https://images.unsplash.com/photo-1434682881908-b43d0467b798?w=640&h=360&fit=crop'
+          ],
+          'flexibility': [
+            'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=640&h=360&fit=crop',
+            'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=640&h=360&fit=crop',
+            'https://images.unsplash.com/photo-1599447292023-2c38a6e5f068?w=640&h=360&fit=crop'
+          ],
+          'balance': [
+            'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=640&h=360&fit=crop',
+            'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=640&h=360&fit=crop'
+          ]
+        };
+        
+        const covers = coverMap[category] || coverMap['strength'];
+        return covers[index % covers.length];
+      };
+      
+      // 获取所有视频
+      const res = await videosCollection.get();
+      const videos = res.data;
+      
+      let updatedCount = 0;
+      const categoryIndexMap = {}; // 记录每个类别的索引
+      
+      // 为每个视频生成封面
+      for (const video of videos) {
+        // 跳过已有封面的视频
+        if (video.thumbnailUrl && video.thumbnailUrl.trim() !== '') {
+          continue;
+        }
+        
+        const category = video.category || 'strength';
+        
+        // 获取该类别的当前索引
+        if (!categoryIndexMap[category]) {
+          categoryIndexMap[category] = 0;
+        }
+        
+        const coverUrl = getCoverUrl(category, categoryIndexMap[category]);
+        categoryIndexMap[category]++;
+        
+        // 更新视频封面
+        await videosCollection.doc(video._id).update({
+          thumbnailUrl: coverUrl
+        });
+        
+        updatedCount++;
+      }
+      
+      return {
+        code: 0,
+        message: `成功为 ${updatedCount} 个视频生成封面`,
+        data: {
+          total: videos.length,
+          updated: updatedCount
+        }
+      };
+    }
+    
     // 删除所有测试视频（清空数据）
     if (action === 'clearTestVideos') {
       // 删除所有包含测试链接的视频
