@@ -59,6 +59,18 @@
       </view>
     </view>
     
+    <!-- 康复训练快捷入口 -->
+    <view class="rehab-banner" @click="navigateTo('/pagesA/rehabilitation/index')">
+      <view class="rehab-content">
+        <view class="rehab-icon">🏋️</view>
+        <view class="rehab-info">
+          <text class="rehab-title">个性化康复训练</text>
+          <text class="rehab-subtitle">根据诊断结果定制训练计划</text>
+        </view>
+        <view class="rehab-arrow">›</view>
+      </view>
+    </view>
+    
     <!-- 今日值班医生 -->
     <view class="doctor-section">
       <view class="section-header">
@@ -487,6 +499,59 @@ export default {
   color: #666;
   text-align: center;
   opacity: 0.8;
+}
+
+/* 康复训练横幅 */
+.rehab-banner {
+  margin: 30rpx;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+}
+
+.rehab-banner:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(16, 185, 129, 0.4);
+}
+
+.rehab-content {
+  display: flex;
+  align-items: center;
+  padding: 32rpx 36rpx;
+}
+
+.rehab-icon {
+  font-size: 56rpx;
+  margin-right: 24rpx;
+  filter: drop-shadow(0 2rpx 8rpx rgba(0,0,0,0.2));
+}
+
+.rehab-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rehab-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 8rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.2);
+}
+
+.rehab-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.1);
+}
+
+.rehab-arrow {
+  font-size: 56rpx;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
 }
 
 /* 医生区域优化 */

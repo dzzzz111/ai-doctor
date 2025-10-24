@@ -144,14 +144,17 @@ export default {
       uni.showLoading({ title: '加载中...' });
       
       try {
-        // 从云数据库获取视频详情
-        const db = uniCloud.database();
-        const res = await db.collection('rehabilitation_videos')
-          .doc(this.videoId)
-          .get();
+        // 通过云函数获取视频详情（避免权限问题）
+        const res = await uniCloud.callFunction({
+          name: 'initRehabVideos',
+          data: {
+            action: 'getVideo',
+            videoId: this.videoId
+          }
+        });
         
-        if (res.data && res.data.length > 0) {
-          this.videoInfo = res.data[0];
+        if (res.result.code === 0 && res.result.data) {
+          this.videoInfo = res.result.data;
           this.videoUrl = this.videoInfo.videoUrl;
           this.totalDuration = this.videoInfo.duration;
         } else {
@@ -214,7 +217,17 @@ export default {
       uni.showLoading({ title: '打卡中...' });
       
       try {
-        let userInfo = uni.getStorageSync('userInfo');
+        // 获取并正确解析用户信息
+        const userInfoStr = uni.getStorageSync('userInfo');
+        let userInfo = null;
+        
+        if (userInfoStr) {
+          try {
+            userInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+          } catch (e) {
+            console.error('解析用户信息失败:', e);
+          }
+        }
         
         // 如果未登录，提供测试模式
         if (!userInfo || !userInfo.userId) {

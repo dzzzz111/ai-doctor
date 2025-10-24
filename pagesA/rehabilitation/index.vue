@@ -153,7 +153,17 @@ export default {
       this.loading = true;
       
       try {
-        let userInfo = uni.getStorageSync('userInfo');
+        // 获取并正确解析用户信息
+        const userInfoStr = uni.getStorageSync('userInfo');
+        let userInfo = null;
+        
+        if (userInfoStr) {
+          try {
+            userInfo = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr;
+          } catch (e) {
+            console.error('解析用户信息失败:', e);
+          }
+        }
         
         // 如果未登录，提供测试模式选项
         if (!userInfo || !userInfo.userId) {
