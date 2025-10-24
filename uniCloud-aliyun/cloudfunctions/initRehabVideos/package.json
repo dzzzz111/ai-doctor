@@ -1,0 +1,7 @@
+{
+  "name": "init-rehab-videos",
+  "version": "1.0.0",
+  "description": "初始化康复训练视频数据",
+  "main": "index.js",
+  "dependencies": {}
+}

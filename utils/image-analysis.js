@@ -9,7 +9,7 @@
 // API配置信息
 const API_CONFIG = {
   url: 'https://e0e1g5s8r2y0v675.aistudio-hub.baidu.com/image-classification',
-  token: 'token 0552473792dbe002d3f69bb34aa207968ebf6ecc',
+  token: 'token 7f4348900370d2d6240a6211f8c2df186c0e610c',
   timeout: 30000
 };
 

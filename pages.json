@@ -8,44 +8,9 @@
 			}
 		},
 		{
-			"path": "pages/ai-doctor/index",
-			"style": {
-				"navigationBarTitleText": "AI智能问诊",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/image-diagnose/index",
-			"style": {
-				"navigationBarTitleText": "图像智能诊断",
-				"navigationStyle": "custom"
-			}
-		},
-		{
 			"path": "pages/mine/index",
 			"style": {
 				"navigationBarTitleText": "个人中心",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/mine/login",
-			"style": {
-				"navigationBarTitleText": "登录",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/mine/register",
-			"style": {
-				"navigationBarTitleText": "注册",
-				"navigationStyle": "custom"
-			}
-		},
-	{
-			"path": "pages/mine/settings",
-			"style": {
-				"navigationBarTitleText": "系统设置",
 				"navigationStyle": "custom"
 			}
 		},
@@ -57,11 +22,95 @@
 			}
 		},
 		{
-			"path": "pages/community/detail",
+			"path": "pages/image-diagnose/history",
 			"style": {
-				"navigationBarTitleText": "帖子详情",
+				"navigationBarTitleText": "图像诊断记录",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/image-diagnose/detail",
+			"style": {
+				"navigationBarTitleText": "诊断详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/admin/init-videos",
+			"style": {
+				"navigationBarTitleText": "视频管理",
+				"navigationBarBackgroundColor": "#667eea",
+				"navigationBarTextStyle": "white"
+			}
+		}
+	],
+	"subPackages": [
+		{
+			"root": "pagesA",
+			"pages": [
+				{
+					"path": "ai-doctor/index",
+					"style": {
+						"navigationBarTitleText": "AI智能问诊",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "image-diagnose/index",
+					"style": {
+						"navigationBarTitleText": "图像智能诊断",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "rehabilitation/index",
+					"style": {
+						"navigationBarTitleText": "康复训练",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "video-player/index",
+					"style": {
+						"navigationBarTitleText": "训练视频",
+						"navigationBarBackgroundColor": "#000000",
+						"navigationBarTextStyle": "white"
+					}
+				}
+			]
+		},
+		{
+			"root": "pagesB",
+			"pages": [
+				{
+					"path": "mine/login",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "mine/register",
+					"style": {
+						"navigationBarTitleText": "注册",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "mine/settings",
+					"style": {
+						"navigationBarTitleText": "系统设置",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "community/detail",
+					"style": {
+						"navigationBarTitleText": "帖子详情",
+						"navigationStyle": "custom"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {

@@ -1,0 +1,7 @@
+{
+  "name": "getDiagnosisDetail",
+  "version": "1.0.0",
+  "description": "获取诊断记录详情",
+  "main": "index.js",
+  "dependencies": {}
+}
