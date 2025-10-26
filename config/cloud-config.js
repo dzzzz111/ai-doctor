@@ -47,10 +47,13 @@ const cloudConfig = {
   getCurrentEnv() {
     // 可以根据不同条件判断环境
     try {
-      const systemInfo = uni.getSystemInfoSync();
-      // 如果在开发工具中运行，使用开发环境
-      if (systemInfo.platform === 'devtools' || systemInfo.platform === 'h5') {
-        return 'development';
+      // 确保 uni 对象存在
+      if (typeof uni !== 'undefined' && uni.getSystemInfoSync) {
+        const systemInfo = uni.getSystemInfoSync();
+        // 如果在开发工具中运行，使用开发环境
+        if (systemInfo.platform === 'devtools' || systemInfo.platform === 'h5') {
+          return 'development';
+        }
       }
     } catch (e) {
       console.error('获取环境信息失败:', e);

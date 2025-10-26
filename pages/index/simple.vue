@@ -19,7 +19,7 @@
         
         <view class="btn-item" @click="navigateTo('/pages/image-diagnose/index')">
           <text class="btn-text">图像诊断</text>
-          <text class="btn-desc">MRI智能分析</text>
+          <text class="btn-desc">X光智能分析</text>
         </view>
       </view>
     </view>

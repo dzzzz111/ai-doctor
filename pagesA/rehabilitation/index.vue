@@ -18,7 +18,7 @@
     <view class="empty-state" v-if="!hasPlan && !loading">
       <image src="/static/images/empty-plan.png" class="empty-image" mode="aspectFit"></image>
       <text class="empty-text">暂无康复训练计划</text>
-      <text class="empty-hint">完成MRI诊断后，系统将为您生成个性化训练方案</text>
+      <text class="empty-hint">完成X光诊断后，系统将为您生成个性化训练方案</text>
       <button class="create-plan-btn" @click="goToDiagnosis">去诊断</button>
     </view>
 

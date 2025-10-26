@@ -143,12 +143,18 @@ class HealthService {
   async getWechatSteps() {
     return new Promise(async (resolve, reject) => {
       // 检查是否在微信环境
-      const platform = uni.getSystemInfoSync().platform
-      console.log('当前平台:', platform)
+      try {
+        const platform = uni.getSystemInfoSync().platform
+        console.log('当前平台:', platform)
+      } catch (error) {
+        console.error('获取系统信息失败:', error)
+        reject(new Error('系统环境异常'))
+        return
+      }
 
       // 判断是否在微信小程序环境
-      if (typeof wx === 'undefined') {
-        console.log('不在微信环境中')
+      if (typeof wx === 'undefined' || typeof wx.getWeRunData !== 'function') {
+        console.log('不在微信环境中或微信API不可用')
         reject(new Error('请在微信小程序中使用'))
         return
       }

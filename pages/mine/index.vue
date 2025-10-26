@@ -236,9 +236,12 @@ export default {
 
     // 检查是否需要自动同步数据
     checkAndSyncData() {
-      if (healthService.needSync()) {
-        this.syncHealthData(false); // 不显示加载提示的静默同步
-      }
+      // 延迟执行，确保微信环境已经完全初始化
+      setTimeout(() => {
+        if (healthService.needSync()) {
+          this.syncHealthData(false); // 不显示加载提示的静默同步
+        }
+      }, 1000); // 延迟1秒执行
     },
 
     // 同步健康数据

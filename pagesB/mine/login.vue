@@ -4,7 +4,7 @@
     <view class="status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
     
     <!-- 返回按钮 -->
-    <view class="back-btn" @click="goBack">
+    <view class="back-btn" :style="{ top: (statusBarHeight + 10) + 'px' }" @click="goBack">
       <text class="iconfont icon-back">←</text>
     </view>
     
@@ -381,7 +381,7 @@ export default {
 /* 返回按钮 */
 .back-btn {
   position: fixed;
-  top: calc(var(--status-bar-height) + 20rpx);
+  /* top 通过内联样式动态设置 */
   left: 30rpx;
   width: 80rpx;
   height: 80rpx;

@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <!-- 导航栏 -->
-    <view class="navbar">
+    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px' }">
       <view class="navbar-inner">
         <view class="back-btn" @click="goBack">
           <text>←</text>
@@ -64,6 +64,7 @@
 export default {
   data() {
     return {
+      statusBarHeight: 20,
       loading: true,
       records: [],
       currentFilter: 'all',
@@ -85,6 +86,8 @@ export default {
     }
   },
   onLoad() {
+    const systemInfo = uni.getSystemInfoSync();
+    this.statusBarHeight = systemInfo.statusBarHeight || 20;
     this.loadRecords();
   },
   methods: {
@@ -184,7 +187,7 @@ export default {
 
 .navbar {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding-top: var(--status-bar-height);
+  /* padding-top 通过内联样式动态设置 */
 }
 
 .navbar-inner {

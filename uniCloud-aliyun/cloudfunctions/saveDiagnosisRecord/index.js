@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * 保存MRI诊断记录
+ * 保存X光诊断记录
  * @param {String} userId - 用户ID
  * @param {String} diagnosisType - 诊断类型
  * @param {String} imageUrl - 图像URL（云存储路径）
@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
     // 准备诊断记录数据
     const recordData = {
       userId,
-      diagnosisType: diagnosisType || '骨关节炎MRI',
+      diagnosisType: diagnosisType || '骨关节炎X光',
       imageUrl: imageUrl || '',
       diagnosisStage: stage,
       confidence: confidence || 0,

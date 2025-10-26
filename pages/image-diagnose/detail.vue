@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <!-- 导航栏 -->
-    <view class="navbar">
+    <view class="navbar" :style="{ paddingTop: statusBarHeight + 'px' }">
       <view class="navbar-inner">
         <view class="back-btn" @click="goBack">
           <text>←</text>
@@ -14,7 +14,7 @@
     </view>
     
     <view class="content" v-if="!loading && detail">
-      <!-- MRI图像 -->
+      <!-- X光图像 -->
       <view class="image-section">
         <image 
           class="mri-image" 
@@ -117,12 +117,16 @@
 export default {
   data() {
     return {
+      statusBarHeight: 20,
       loading: true,
       diagnosisId: '',
       detail: null
     };
   },
   onLoad(options) {
+    const systemInfo = uni.getSystemInfoSync();
+    this.statusBarHeight = systemInfo.statusBarHeight || 20;
+    
     if (options.id) {
       this.diagnosisId = options.id;
       this.loadDetail();
@@ -297,7 +301,7 @@ export default {
 
 .navbar {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding-top: var(--status-bar-height);
+  /* padding-top 通过内联样式动态设置 */
 }
 
 .navbar-inner {

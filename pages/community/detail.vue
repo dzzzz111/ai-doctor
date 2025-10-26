@@ -13,7 +13,15 @@
     </view>
     
     <!-- 内容区域 -->
-    <scroll-view scroll-y class="content" :scroll-top="scrollTop">
+    <scroll-view 
+      scroll-y 
+      class="content" 
+      :style="{ 
+        paddingTop: (statusBarHeight + 44) + 'px',
+        height: 'calc(100vh - ' + (statusBarHeight + 44 + 60) + 'px)'
+      }"
+      :scroll-top="scrollTop"
+    >
       <!-- 帖子内容 -->
       <view class="post-detail" v-if="post">
         <!-- 用户信息 -->
@@ -429,8 +437,7 @@ export default {
 
 /* 内容区域 */
 .content {
-  height: calc(100vh - 44px - var(--status-bar-height, 20px) - 60px);
-  padding-top: calc(44px + var(--status-bar-height, 20px));
+  /* padding-top 和 height 通过内联样式动态设置 */
 }
 
 /* 帖子详情 */

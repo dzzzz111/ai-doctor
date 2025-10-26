@@ -35,65 +35,63 @@
       </swiper>
     </view>
 
+    <!-- 康复训练主推荐卡片 -->
+    <view class="rehab-featured" @click="navigateTo('/pagesA/rehabilitation/index')">
+      <view class="featured-badge">🌟 个性化康复训练</view>
+      <view class="featured-content">
+        <view class="featured-left">
+          <view class="featured-icon">🏋️</view>
+          <view class="featured-info">
+            <text class="featured-title">专业康复训练计划</text>
+            <text class="featured-subtitle">• 根据X光诊断定制方案</text>
+            <text class="featured-subtitle">• 视频指导科学训练</text>
+            <text class="featured-subtitle">• 打卡记录进度跟踪</text>
+          </view>
+        </view>
+        <view class="featured-right">
+          <view class="start-btn">立即开始</view>
+          <text class="featured-arrow">›</text>
+        </view>
+      </view>
+    </view>
+    
     <!-- 功能区 -->
-    <view class="function-area">
-      <view class="function-item ai-function" @click="navigateTo('/pagesA/ai-doctor/index')">
-        <view class="function-icon-wrapper">
-          <view class="function-icon ai-icon">
-            <image src="/static/icons/ai-icon.png" mode="aspectFit"></image>
-          </view>
-          <view class="icon-glow ai-glow"></view>
-        </view>
-        <text class="function-text">AI智能问诊</text>
-        <text class="function-desc">专业医疗咨询</text>
-      </view>
-      <view class="function-item image-function" @click="navigateTo('/pagesA/image-diagnose/index')">
-        <view class="function-icon-wrapper">
-          <view class="function-icon image-icon">
-            <image src="/static/icons/image-icon.png" mode="aspectFit"></image>
-          </view>
-          <view class="icon-glow image-glow"></view>
-        </view>
-        <text class="function-text">图像诊断</text>
-        <text class="function-desc">MRI智能分析</text>
-      </view>
-    </view>
-    
-    <!-- 康复训练快捷入口 -->
-    <view class="rehab-banner" @click="navigateTo('/pagesA/rehabilitation/index')">
-      <view class="rehab-content">
-        <view class="rehab-icon">🏋️</view>
-        <view class="rehab-info">
-          <text class="rehab-title">个性化康复训练</text>
-          <text class="rehab-subtitle">根据诊断结果定制训练计划</text>
-        </view>
-        <view class="rehab-arrow">›</view>
-      </view>
-    </view>
-    
-    <!-- 今日值班医生 -->
-    <view class="doctor-section">
-      <view class="section-header">
-        <view class="section-title-wrapper">
-          <text class="section-icon">👨‍⚕️</text>
-          <text class="title">今日值班医生</text>
-        </view>
-        <text class="more" @click="navigateTo('/pages/doctors/index')">全部</text>
-      </view>
-      <scroll-view scroll-x class="doctor-scroll" show-scrollbar="false">
-        <view class="doctor-list">
-          <view class="doctor-card" v-for="(doctor, index) in doctorList" :key="index" @click="viewDoctorDetail(doctor)">
-            <view class="doctor-avatar-wrapper">
-              <image class="doctor-avatar" :src="doctor.avatar" mode="aspectFill"></image>
-              <view class="online-status" v-if="doctor.available"></view>
-            </view>
-            <text class="doctor-name">{{doctor.name}}</text>
-            <text class="doctor-title">{{doctor.title}}</text>
-            <text class="doctor-dept">{{doctor.department}}</text>
-            <view class="consult-btn">咨询</view>
+    <view class="function-section">
+      <view class="section-title-simple">📱 核心功能</view>
+      
+      <!-- 主推功能卡片 -->
+      <view class="feature-primary" @click="navigateTo('/pagesA/ai-doctor/index')">
+        <view class="primary-left">
+          <view class="primary-icon-wrapper">
+            <view class="primary-icon">🤖</view>
           </view>
         </view>
-      </scroll-view>
+        <view class="primary-right">
+          <text class="primary-title">AI智能问诊</text>
+          <text class="primary-desc">24小时在线医疗咨询</text>
+          <text class="primary-subtitle">专业·智能·便捷</text>
+        </view>
+        <view class="primary-badge">HOT</view>
+      </view>
+      
+      <!-- 次级功能卡片 -->
+      <view class="function-grid">
+        <view class="function-card" @click="navigateTo('/pagesA/image-diagnose/index')">
+          <view class="card-icon-wrapper image-wrapper">
+            <view class="card-icon">🔬</view>
+          </view>
+          <text class="card-title">X光智能诊断</text>
+          <text class="card-desc">精准分期分析</text>
+        </view>
+        
+        <view class="function-card" @click="navigateTo('/pages/community/index')">
+          <view class="card-icon-wrapper community-wrapper">
+            <view class="card-icon">👥</view>
+          </view>
+          <text class="card-title">健康社区</text>
+          <text class="card-desc">经验交流分享</text>
+        </view>
+      </view>
     </view>
 
     <!-- 健康资讯 -->
@@ -130,7 +128,7 @@ export default {
         {
           id: 1,
           title: '骨关节炎新疗法研究突破',
-          image: '/static/images/news1.png',
+          image: 'https://mp-aec6565b-c333-4030-8492-6cc423e8ca1a.cdn.bspapp.com/images/news1.png',
         },
         {
           id: 2,
@@ -140,41 +138,7 @@ export default {
         {
           id: 3,
           title: '饮食与骨关节炎的关系',
-          image: '/static/images/news3.png',
-        }
-      ],
-      doctorList: [
-        {
-          id: 1,
-          name: '王医生',
-          title: '主任医师',
-          department: '骨科',
-          avatar: '/static/images/ai-avatar.png',
-          available: true
-        },
-        {
-          id: 2,
-          name: '李医生',
-          title: '副主任医师',
-          department: '内科',
-          avatar: '/static/images/user-avatar.png',
-          available: true
-        },
-        {
-          id: 3,
-          name: '张医生',
-          title: '主治医师',
-          department: '神经科',
-          avatar: '/static/images/default-avatar.png',
-          available: true
-        },
-        {
-          id: 4,
-          name: '刘医生',
-          title: '主任医师',
-          department: '康复科',
-          avatar: '/static/images/ai-avatar.png',
-          available: true
+          image: 'https://mp-aec6565b-c333-4030-8492-6cc423e8ca1a.cdn.bspapp.com/images/news3.png',
         }
       ],
       newsList: [
@@ -182,7 +146,7 @@ export default {
           id: 1,
           title: '骨关节炎新疗法研究突破',
           description: '科学家发现可能逆转软骨损伤的再生技术',
-          image: '/static/images/news1.png',
+          image: 'https://mp-aec6565b-c333-4030-8492-6cc423e8ca1a.cdn.bspapp.com/images/news1.png',
           time: '2023-10-18'
         },
         {
@@ -196,7 +160,7 @@ export default {
           id: 3,
           title: '饮食与骨关节炎的关系',
           description: '最新研究揭示某些食物可能加重或缓解关节炎症状',
-          image: '/static/images/news3.png',
+          image: 'https://mp-aec6565b-c333-4030-8492-6cc423e8ca1a.cdn.bspapp.com/images/news3.png',
           time: '2023-10-12'
         }
       ],
@@ -217,11 +181,6 @@ export default {
     viewNewsDetail(item) {
       uni.navigateTo({
         url: `/pages/news/detail?id=${item.id}`
-      });
-    },
-    viewDoctorDetail(doctor) {
-      uni.navigateTo({
-        url: `/pages/doctors/detail?id=${doctor.id}`
       });
     }
   }
@@ -245,14 +204,22 @@ export default {
 /* 顶部Banner优化 */
 .header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 240rpx;
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+  height: 260rpx;
   padding-top: 44rpx;
   display: flex;
   flex-direction: column;
   color: #fff;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.3);
+  box-shadow: 0 10rpx 40rpx rgba(102, 126, 234, 0.35);
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* 移除复杂动画 */
@@ -275,18 +242,43 @@ export default {
 }
 
 .header-title {
-  font-size: 48rpx;
+  font-size: 52rpx;
   font-weight: bold;
-  text-shadow: 0 4rpx 12rpx rgba(0,0,0,0.3);
-  margin-bottom: 8rpx;
-  letter-spacing: 2rpx;
+  text-shadow: 0 4rpx 16rpx rgba(0,0,0,0.3);
+  margin-bottom: 12rpx;
+  letter-spacing: 3rpx;
+  animation: titleFadeIn 0.8s ease-out;
+}
+
+@keyframes titleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-subtitle {
-  font-size: 26rpx;
-  opacity: 0.9;
-  text-shadow: 0 2rpx 6rpx rgba(0,0,0,0.2);
+  font-size: 28rpx;
+  opacity: 0.95;
+  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.2);
   font-weight: 300;
+  letter-spacing: 1rpx;
+  animation: subtitleFadeIn 1s ease-out 0.2s both;
+}
+
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10rpx);
+  }
+  to {
+    opacity: 0.95;
+    transform: translateY(0);
+  }
 }
 
 .header-decoration {
@@ -306,9 +298,57 @@ export default {
   50% { opacity: 1; transform: translateX(-50%) scaleX(1.2); }
 }
 
-/* 装饰性粒子 - 简化版 */
+/* 装饰性粒子 - 优化版 */
 .header-particles {
-  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.15;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.particle-1 {
+  width: 100rpx;
+  height: 100rpx;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  width: 60rpx;
+  height: 60rpx;
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.particle-3 {
+  width: 80rpx;
+  height: 80rpx;
+  top: 40%;
+  right: 5%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-30rpx) rotate(180deg);
+    opacity: 0.3;
+  }
 }
 
 /* 轮播图优化 */
@@ -318,17 +358,18 @@ export default {
 }
 
 .swiper {
-  height: 360rpx;
-  border-radius: 24rpx;
+  height: 380rpx;
+  border-radius: 28rpx;
   overflow: hidden;
-  box-shadow: 0 12rpx 48rpx rgba(102, 126, 234, 0.2);
+  box-shadow: 0 16rpx 48rpx rgba(102, 126, 234, 0.25);
   transform: translateZ(0);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 3rpx solid rgba(255, 255, 255, 0.8);
 }
 
-.swiper:hover {
-  transform: translateY(-4rpx) scale(1.02);
-  box-shadow: 0 16rpx 64rpx rgba(102, 126, 234, 0.3);
+.swiper:active {
+  transform: translateY(-2rpx) scale(1.01);
+  box-shadow: 0 20rpx 64rpx rgba(102, 126, 234, 0.35);
 }
 
 .swiper-item {
@@ -353,10 +394,10 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.3), transparent);
   color: #fff;
-  padding: 40rpx 30rpx;
-  backdrop-filter: blur(10rpx);
+  padding: 50rpx 35rpx 35rpx;
+  backdrop-filter: blur(12rpx);
 }
 
 .swiper-content {
@@ -366,10 +407,11 @@ export default {
 }
 
 .swiper-title {
-  font-size: 34rpx;
+  font-size: 36rpx;
   font-weight: bold;
-  line-height: 1.4;
-  text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.5);
+  line-height: 1.5;
+  text-shadow: 0 3rpx 12rpx rgba(0,0,0,0.6);
+  letter-spacing: 1rpx;
 }
 
 .swiper-subtitle {
@@ -501,75 +543,343 @@ export default {
   opacity: 0.8;
 }
 
-/* 康复训练横幅 */
-.rehab-banner {
+/* 康复训练主推荐卡片 */
+.rehab-featured {
   margin: 30rpx;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  border-radius: 20rpx;
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+  border-radius: 28rpx;
   overflow: hidden;
-  box-shadow: 0 8rpx 24rpx rgba(16, 185, 129, 0.3);
-  transition: all 0.3s ease;
+  box-shadow: 0 16rpx 48rpx rgba(16, 185, 129, 0.45);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  border: 3rpx solid rgba(255, 255, 255, 0.3);
 }
 
-.rehab-banner:active {
-  transform: scale(0.98);
-  box-shadow: 0 4rpx 16rpx rgba(16, 185, 129, 0.4);
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.rehab-content {
+.rehab-featured:active {
+  transform: scale(0.97);
+  box-shadow: 0 12rpx 36rpx rgba(16, 185, 129, 0.55);
+}
+
+.featured-badge {
+  position: absolute;
+  top: 24rpx;
+  left: 24rpx;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12rpx);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+  padding: 12rpx 24rpx;
+  border-radius: 40rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
+  animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.featured-content {
   display: flex;
   align-items: center;
-  padding: 32rpx 36rpx;
+  justify-content: space-between;
+  padding: 70rpx 30rpx 40rpx;
 }
 
-.rehab-icon {
-  font-size: 56rpx;
-  margin-right: 24rpx;
-  filter: drop-shadow(0 2rpx 8rpx rgba(0,0,0,0.2));
-}
-
-.rehab-info {
+.featured-left {
+  display: flex;
+  align-items: flex-start;
   flex: 1;
+}
+
+.featured-icon {
+  font-size: 88rpx;
+  margin-right: 24rpx;
+  filter: drop-shadow(0 6rpx 16rpx rgba(0,0,0,0.35));
+  animation: iconBounce 3s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+.featured-info {
   display: flex;
   flex-direction: column;
 }
 
-.rehab-title {
-  font-size: 32rpx;
+.featured-title {
+  font-size: 36rpx;
   font-weight: bold;
   color: #fff;
-  margin-bottom: 8rpx;
+  margin-bottom: 16rpx;
   text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.2);
 }
 
-.rehab-subtitle {
-  font-size: 24rpx;
-  color: rgba(255, 255, 255, 0.9);
+.featured-subtitle {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 8rpx;
   text-shadow: 0 1rpx 4rpx rgba(0,0,0,0.1);
+  line-height: 1.5;
 }
 
-.rehab-arrow {
-  font-size: 56rpx;
+.featured-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.start-btn {
+  background: rgba(255, 255, 255, 0.98);
+  color: #059669;
+  font-size: 28rpx;
+  font-weight: bold;
+  padding: 20rpx 36rpx;
+  border-radius: 40rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% { box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.25); }
+  50% { box-shadow: 0 8rpx 28rpx rgba(0, 0, 0, 0.35); }
+}
+
+.featured-arrow {
+  font-size: 60rpx;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 300;
 }
 
-/* 医生区域优化 */
-.doctor-section, .news-section {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20rpx);
-  margin: 0 30rpx 30rpx;
+/* 功能区域 */
+.function-section {
+  margin: 30rpx;
+}
+
+.section-title-simple {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+  padding-left: 8rpx;
+}
+
+/* 主推功能卡片 */
+.feature-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 28rpx;
+  padding: 40rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  box-shadow: 0 16rpx 48rpx rgba(102, 126, 234, 0.35);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.feature-primary:active {
+  transform: scale(0.98);
+  box-shadow: 0 12rpx 36rpx rgba(102, 126, 234, 0.45);
+}
+
+.primary-left {
+  margin-right: 24rpx;
+}
+
+.primary-icon-wrapper {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+}
+
+.primary-icon {
+  font-size: 64rpx;
+  filter: drop-shadow(0 4rpx 12rpx rgba(0, 0, 0, 0.2));
+}
+
+.primary-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.primary-title {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.primary-desc {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.4;
+}
+
+.primary-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 2rpx;
+}
+
+.primary-badge {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  background: rgba(255, 107, 107, 0.95);
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: bold;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.4);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* 次级功能卡片网格 */
+.function-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.function-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
   border-radius: 24rpx;
-  padding: 40rpx 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.12);
-  border: 1rpx solid rgba(255, 255, 255, 0.3);
+  padding: 40rpx 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10rpx 32rpx rgba(102, 126, 234, 0.15);
+  border: 2rpx solid rgba(102, 126, 234, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  min-height: 240rpx;
+}
+
+.function-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.function-card:active::before {
+  left: 100%;
+}
+
+.function-card:active {
+  transform: scale(0.95) translateY(2rpx);
+  box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.25);
+}
+
+.card-icon-wrapper {
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+  position: relative;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
-.doctor-section:hover, .news-section:hover {
-  transform: translateY(-2rpx);
-  box-shadow: 0 12rpx 48rpx rgba(102, 126, 234, 0.18);
+.function-card:active .card-icon-wrapper {
+  transform: scale(0.95);
 }
+
+.ai-wrapper {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.4);
+}
+
+.image-wrapper {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  box-shadow: 0 8rpx 24rpx rgba(240, 147, 251, 0.4);
+}
+
+.history-wrapper {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 8rpx 24rpx rgba(79, 172, 254, 0.4);
+}
+
+.community-wrapper {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  box-shadow: 0 8rpx 24rpx rgba(67, 233, 123, 0.4);
+}
+
+.card-icon {
+  font-size: 56rpx;
+  filter: drop-shadow(0 3rpx 10rpx rgba(0,0,0,0.25));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6rpx); }
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  letter-spacing: 0.5rpx;
+}
+
+.card-desc {
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  opacity: 0.85;
+}
+
+/* 资讯区域优化 */
+.news-section {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(24rpx);
+  margin: 0 30rpx 30rpx;
+  border-radius: 28rpx;
+  padding: 44rpx 32rpx;
+  box-shadow: 0 12rpx 40rpx rgba(102, 126, 234, 0.15);
+  border: 2rpx solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
 
 .section-header {
   display: flex;
@@ -613,122 +923,22 @@ export default {
   transform: scale(1.05);
 }
 
-.doctor-scroll {
-  width: 100%;
-  white-space: nowrap;
-}
-
-.doctor-list {
-  display: flex;
-  padding: 10rpx 0;
-}
-
-.doctor-card {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  width: 220rpx;
-  margin-right: 30rpx;
-  background: linear-gradient(145deg, rgba(248, 249, 255, 0.9), rgba(232, 240, 255, 0.9));
-  backdrop-filter: blur(10rpx);
-  border-radius: 24rpx;
-  padding: 35rpx 20rpx;
-  box-shadow: 0 6rpx 24rpx rgba(102, 126, 234, 0.15);
-  border: 2rpx solid rgba(102, 126, 234, 0.1);
-  transition: all 0.3s ease;
-}
-
-.doctor-card:hover {
-  transform: translateY(-4rpx) scale(1.02);
-  box-shadow: 0 12rpx 36rpx rgba(102, 126, 234, 0.25);
-}
-
-.doctor-avatar-wrapper {
-  position: relative;
-  margin-bottom: 20rpx;
-}
-
-.doctor-avatar {
-  width: 110rpx;
-  height: 110rpx;
-  border-radius: 50%;
-  border: 4rpx solid #667eea;
-  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.2);
-  transition: transform 0.3s ease;
-}
-
-.doctor-card:hover .doctor-avatar {
-  transform: scale(1.05);
-}
-
-.online-status {
-  position: absolute;
-  bottom: 8rpx;
-  right: 8rpx;
-  width: 24rpx;
-  height: 24rpx;
-  background: #4CAF50;
-  border-radius: 50%;
-  border: 4rpx solid #fff;
-  box-shadow: 0 2rpx 8rpx rgba(76, 175, 80, 0.3);
-  animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.doctor-name {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 6rpx;
-}
-
-.doctor-title {
-  font-size: 24rpx;
-  color: #667eea;
-  margin-bottom: 4rpx;
-}
-
-.doctor-dept {
-  font-size: 22rpx;
-  color: #999;
-  margin-bottom: 20rpx;
-}
-
-.consult-btn {
-  font-size: 24rpx;
-  color: #fff;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  padding: 14rpx 28rpx;
-  border-radius: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.3);
-  transition: all 0.3s ease;
-}
-
-.consult-btn:hover {
-  transform: translateY(-2rpx);
-  box-shadow: 0 6rpx 20rpx rgba(102, 126, 234, 0.4);
-}
-
 /* 资讯区域优化 */
 .news-item {
   display: flex;
-  padding: 30rpx 20rpx;
+  padding: 30rpx 24rpx;
   border-bottom: 2rpx solid rgba(102, 126, 234, 0.05);
-  border-radius: 16rpx;
-  margin-bottom: 16rpx;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10rpx);
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(248, 249, 255, 0.6) 100%);
+  backdrop-filter: blur(12rpx);
 }
 
-.news-item:hover {
-  background: rgba(102, 126, 234, 0.05);
-  transform: translateX(8rpx) scale(1.01);
-  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.1);
+.news-item:active {
+  background: rgba(102, 126, 234, 0.08);
+  transform: scale(0.98);
+  box-shadow: 0 6rpx 24rpx rgba(102, 126, 234, 0.15);
 }
 
 .news-item:last-child {
@@ -737,17 +947,15 @@ export default {
 }
 
 .news-image {
-  width: 220rpx;
-  height: 160rpx;
-  border-radius: 16rpx;
+  width: 230rpx;
+  height: 170rpx;
+  border-radius: 20rpx;
   margin-right: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease;
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
 }
 
-.news-item:hover .news-image {
-  transform: scale(1.05);
-}
 
 .news-content {
   flex: 1;
@@ -757,15 +965,16 @@ export default {
 }
 
 .news-title {
-  font-size: 30rpx;
+  font-size: 32rpx;
   font-weight: bold;
   color: #333;
-  line-height: 1.4;
-  margin-bottom: 12rpx;
+  line-height: 1.5;
+  margin-bottom: 14rpx;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  letter-spacing: 0.5rpx;
 }
 
 .news-desc {
@@ -812,10 +1021,6 @@ export default {
     width: 100%;
   }
 
-  .doctor-card {
-    width: 180rpx;
-  }
-
   .news-image {
     width: 180rpx;
     height: 120rpx;
@@ -851,16 +1056,16 @@ view, text, image, button {
   animation-delay: 0.1s;
 }
 
-.function-area {
+.rehab-featured {
+  animation-delay: 0.1s;
+}
+
+.function-section {
   animation-delay: 0.2s;
 }
 
-.doctor-section {
-  animation-delay: 0.3s;
-}
-
 .news-section {
-  animation-delay: 0.4s;
+  animation-delay: 0.3s;
 }
 
 /* 滚动条美化 */

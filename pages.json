@@ -51,6 +51,13 @@
 			}
 		},
 		{
+			"path": "pages/news/detail",
+			"style": {
+				"navigationBarTitleText": "资讯详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/admin/init-videos",
 			"style": {
 				"navigationBarTitleText": "视频管理",

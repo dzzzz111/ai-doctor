@@ -2,12 +2,12 @@
   <view class="container">
     <!-- 顶部标题 -->
     <view class="header">
-      <view class="status-bar"></view>
+      <view class="status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
       <view class="nav-bar">
         <view class="back-btn" @click="goBack">
           <text class="iconfont icon-back">←</text>
         </view>
-        <text class="header-title">骨关节炎MRI诊断</text>
+        <text class="header-title">骨关节炎X光诊断</text>
         <view class="placeholder"></view>
       </view>
     </view>
@@ -31,13 +31,13 @@
         <view class="upload-icon">
           <text class="iconfont icon-image"></text>
         </view>
-        <text class="hint-text">上传膝关节MRI图像</text>
-        <text class="sub-hint">请上传清晰的膝关节核磁共振图像，以便系统准确判断骨关节炎分期</text>
+        <text class="hint-text">上传膝关节X光片</text>
+        <text class="sub-hint">请上传清晰的膝关节X光片，以便系统准确判断骨关节炎分期</text>
       </view>
       <view class="upload-buttons">
         <view class="btn select-image" @click="selectImage">
           <text class="btn-icon iconfont icon-album"></text>
-          <text class="btn-text">选择MRI图像</text>
+          <text class="btn-text">选择X光片</text>
         </view>
       </view>
     </view>
@@ -117,7 +117,7 @@ export default {
   data() {
     return {
       diagnosisTypes: [
-        { name: '骨关节炎MRI', hint: '上传膝关节核磁共振(MRI)图像进行骨关节炎分期诊断' }
+        { name: '骨关节炎X光', hint: '上传膝关节X光片进行骨关节炎分期诊断' }
       ],
       currentType: 0,
       imageUrl: '',
@@ -617,7 +617,7 @@ export default {
 }
 
 .status-bar {
-  height: 44rpx;
+  /* height 通过内联样式动态设置 */
   width: 100%;
 }
 

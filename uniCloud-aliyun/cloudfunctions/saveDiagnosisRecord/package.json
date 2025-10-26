@@ -1,7 +1,7 @@
 {
   "name": "saveDiagnosisRecord",
   "version": "1.0.0",
-  "description": "保存MRI诊断记录到云数据库",
+  "description": "保存X光诊断记录到云数据库",
   "main": "index.js",
   "dependencies": {}
 }

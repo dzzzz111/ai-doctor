@@ -2,9 +2,10 @@
   "setting": {
     "es6": true,
     "postcss": true,
-    "minified": true,
+    "minified": false,
     "uglifyFileName": false,
-    "enhance": true,
+    "enhance": false,
+    "showShadowRootInWxmlPanel": true,
     "packNpmRelationList": [],
     "babelSetting": {
       "ignore": [],
@@ -12,16 +13,11 @@
       "outputPath": ""
     },
     "useCompilerPlugins": false,
-    "minifyWXML": true,
+    "minifyWXML": false,
     "compileWorklet": false,
-    "uploadWithSourceMap": true,
+    "uploadWithSourceMap": false,
     "packNpmManually": false,
-    "minifyWXSS": true,
-    "localPlugins": false,
-    "disableUseStrict": false,
-    "condition": false,
-    "swc": false,
-    "disableSWC": true
+    "minifyWXSS": false
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
@@ -29,7 +25,7 @@
     "ignore": [],
     "include": []
   },
-  "appid": "wxb52767c4748eb9f9",
+  "appid": "wx121837575fd549e6",
   "editorSetting": {},
-  "libVersion": "3.10.0"
+  "libVersion": "2.33.1"
 }
