@@ -250,7 +250,7 @@ export default {
       const stageResults = {
         'I': {
           items: [
-            { name: '诊断结果', value: '膝关节骨关节炎 (97% 可信度)' },
+            { name: '诊断结果', value: '膝关节骨关节炎' },
             { name: '分期', value: 'I期 (早期)' },
             { name: '部位', value: '膝关节内侧间隙' }
           ],
@@ -259,7 +259,7 @@ export default {
         },
         'II': {
           items: [
-            { name: '诊断结果', value: '膝关节骨关节炎 (98% 可信度)' },
+            { name: '诊断结果', value: '膝关节骨关节炎' },
             { name: '分期', value: 'II期 (轻度)' },
             { name: '部位', value: '膝关节内侧间隙' }
           ],
@@ -268,7 +268,7 @@ export default {
         },
         'III': {
           items: [
-            { name: '诊断结果', value: '膝关节骨关节炎 (99% 可信度)' },
+            { name: '诊断结果', value: '膝关节骨关节炎' },
             { name: '分期', value: 'III期 (中度)' },
             { name: '部位', value: '膝关节内侧和外侧间隙' }
           ],
@@ -277,7 +277,7 @@ export default {
         },
         'IV': {
           items: [
-            { name: '诊断结果', value: '膝关节骨关节炎 (99% 可信度)' },
+            { name: '诊断结果', value: '膝关节骨关节炎' },
             { name: '分期', value: 'IV期 (重度)' },
             { name: '部位', value: '膝关节全面受累' }
           ],
@@ -359,8 +359,7 @@ export default {
             diagnosisType: this.diagnosisTypes[this.currentType].name,
             imageUrl: cloudImageUrl,
             result: this.diagnosisResult,
-            stage: this.diagnosisResult.stage,
-            confidence: this.diagnosisResult.confidence
+            stage: this.diagnosisResult.stage
           }
         });
         
@@ -384,7 +383,6 @@ export default {
           imageUrl: cloudImageUrl,
           mainResult: this.diagnosisResult.items[0].value,
           time: this.currentTime,
-          confidence: this.diagnosisResult.confidence,
           stage: this.diagnosisResult.stage
         });
         

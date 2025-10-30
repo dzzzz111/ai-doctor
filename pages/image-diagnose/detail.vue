@@ -45,17 +45,6 @@
         </view>
       </view>
       
-      <!-- 置信度 -->
-      <view class="section">
-        <view class="section-title">诊断置信度</view>
-        <view class="confidence-bar">
-          <view class="bar-bg">
-            <view class="bar-fill" :style="{ width: (detail.confidence * 100) + '%' }"></view>
-          </view>
-          <text class="confidence-text">{{ Math.round(detail.confidence * 100) }}%</text>
-        </view>
-      </view>
-      
       <!-- 分析说明 -->
       <view class="section">
         <view class="section-title">分析说明</view>
@@ -167,7 +156,6 @@ export default {
             imageUrl: data.imageUrl,
             time: this.formatTime(data.createdAt),
             stage: data.stage,
-            confidence: data.confidence,
             items: data.items,
             analysis: data.analysis,
             suggestion: data.suggestion,
@@ -425,35 +413,6 @@ export default {
 .value {
   font-size: 14px;
   color: #333;
-}
-
-.confidence-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.bar-bg {
-  flex: 1;
-  height: 10px;
-  background: #f0f0f0;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  border-radius: 5px;
-  transition: width 0.5s;
-}
-
-.confidence-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: #667eea;
-  min-width: 50px;
-  text-align: right;
 }
 
 .text-content {
